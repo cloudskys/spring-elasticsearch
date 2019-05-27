@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 开启注解 -->
+	<context:component-scan base-package="com.controller"></context:component-scan>
+	<!-- 开启spring对 springmvc注解的 支持 -->
+	<mvc:annotation-driven />
+	<!-- 对静态资源例如 图片进行放行，使其可以不通过 DispatcherServlet ，而是 使用 tomcat 默认的 default-servlet 来进行处理 -->
+	 <mvc:default-servlet-handler /> 
+	<!-- 视图解析器：设置视图路径的前后缀，该配置可以让我们写视图路径的时候更简单。 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- struts：<result name="login">/WEB-INF/views/login.jsp</result> -->
+		<!--前缀： jsp在当前工程文件夹的路径 -->
+		<property name="prefix" value="/" />
+		<!--后缀：扩展名 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>

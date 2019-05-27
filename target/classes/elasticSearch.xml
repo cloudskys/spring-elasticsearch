@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/elasticsearch
+		http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
+ 
+    <!--通过transport方式与ES集群通信,不需要在本地创建节点-->
+    <!--client-transport-sniff表示是否进行自动嗅探ES集群中节点-->
+     <elasticsearch:transport-client id="es.transport.client"
+                                     cluster-nodes="${es._hostName}"
+                                     cluster-name="${es._clusterName}"
+                                     client-transport-sniff="true"/>
+ 
+    <!-- spring data elasticsearch DAO 必须依赖 elasticsearchTemplate  -->
+    <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="es.transport.client"/>
+    </bean>
+ 
+    <!-- 扫描DAO包 自动创建实现 -->
+    <elasticsearch:repositories base-package="com.**.elasticsearch.dao"/>
+ 
+    <!-- 扫描Service包 -->
+    <context:component-scan base-package="com.**.elasticsearch.service"/>
+ 
+</beans>
