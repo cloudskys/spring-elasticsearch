@@ -1,0 +1,75 @@
+curl -H "Content-Type: application/json" -XPOST "http://127.0.0.1:9200/productindex/product/_mapping?pretty" -d ' 
+{
+    "product": {
+            "properties": {
+                "title": {
+                    "type": "integer"
+                    
+                },
+                "description": {
+                    "type": "integer"
+                },
+                "price": {
+                    "type": "double"
+                },
+                "onSale": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "createDate": {
+                    "type": "date"
+                }
+            }
+        }
+  }
+'
+
+
+curl -H "Content-Type: application/json" -XPUT "http://127.0.0.1:9200/productindex/product/_mapping?pretty" -d '{
+     "product": {
+                "properties": {
+                     "wangwei":{
+                        "type":"integer"
+                   }
+                }
+            }
+    }'
+	
+	
+curl -H "Content-Type: application/json" -XPUT "http://127.0.0.1:9200/productindex/product/_mapping?pretty" -d '{
+     "product": {
+                "properties": {
+                     "wangwei":{
+                        "type":"integer"
+                   }
+                }
+            }
+    }'
+	
+	
+	curl -H "Content-Type: application/json" -XPUT 'http://localhost:9200/pms/_mapping/product' -d '
+ {       
+   "properties": {
+         "brandName": {  
+             "type": "text",
+            "fielddata": true
+         }       
+     }         
+}'
+
+
+curl -H "Content-Type: application/json" -XPUT 'http://localhost:9200/pms/_mapping/product' -d '
+ {       
+   "properties": {
+         "productCategoryName": {  
+             "type": "text",
+            "fielddata": true
+         },
+         "brandName": {  
+             "type": "text",
+            "fielddata": true
+         }       		 
+     }         
+}'
