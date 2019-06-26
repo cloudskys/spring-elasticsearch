@@ -16,20 +16,59 @@
 		http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
 
 	<!-- load properties -->
-	<bean id="propertyHolder" class="com.fxwiz.base.framework.PropertyConfigurerEx">
+	<bean id="propertyHolder" class="com.fxwiz.base.utils.CustomizedPropertyConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:public_device.properties</value>
+				<value>classpath:jdbc.properties</value>
 				<value>classpath:public_system.properties</value>
 			</list>
 		</property>
 	</bean>
 
-	<context:component-scan base-package="com.heyou"/>
-	<context:component-scan base-package="com.fxwiz"/>
+	<context:component-scan base-package="com.fix"/>
 
 	<!-- 扫描dao层 -->
-	<es:repositories base-package="com.fxwiz.search.**.dao"/>
+	<es:repositories base-package="com.elasticsearch.repository"/>
+	
+	<!-- 数据库连接池   大库-->
+	<bean id="hefaDataBase" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<property name="maxActive" value="${jdbc.max_active}" />
+		<property name="initialSize" value="${jdbc.initial_size}" />
+		<property name="maxWait" value="${jdbc.max_wait}" />
+		<property name="minIdle" value="${jdbc.min_idle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="3000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+	</bean>
+
+	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="hefaDataBase" />
+		<property name="configLocation" value="classpath:/mybatis/mybatis-configuration.xml" />
+		<!-- 自动扫描mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath*:/mybatis/mappers/*.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.fix.elasticsearch.dao" />  <!-- 需要修改 -->
+	</bean>
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+   <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="hefaDataBase" />
+	</bean>
+	
+	
 	<!-- ES配置 -->
 	<import resource="classpath:elasticSearch.xml"/>
 	

@@ -4,7 +4,7 @@
 <body>
 	<center>
 		<h1>Hello Spring</h1>
-		<form action="/SpringTest/Welcome/all" method="post">
+		<form action="/spring-elasticsearch/esProduct/importAll" method="post">
 		<button type="submit" style="width: 400px ;height: 200px" ><b style="font-size:xx-large;color: red">CLICK</b></button>
 		</form>
 	</center>

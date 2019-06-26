@@ -21,9 +21,9 @@
     </bean>
  
     <!-- 扫描DAO包 自动创建实现 -->
-    <elasticsearch:repositories base-package="com.**.elasticsearch.dao"/>
+    <elasticsearch:repositories base-package="com.fix.elasticsearch.repository"/>
  
     <!-- 扫描Service包 -->
-    <context:component-scan base-package="com.**.elasticsearch.service"/>
+    <context:component-scan base-package="com.fix.elasticsearch.service"/>
  
 </beans>
