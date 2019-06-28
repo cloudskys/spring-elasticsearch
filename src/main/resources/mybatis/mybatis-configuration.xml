@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
  <settings>
-  <setting name="logImpl" value="STDOUT_LOGGING"/>
+ <!-- <setting name="logImpl" value="STDOUT_LOGGING"/> -->
    <!-- 全局映射器启用缓存 -->
   <setting name="cacheEnabled" value="false" />
   <!-- 查询时，关闭关联对象即时加载以提高性能 -->

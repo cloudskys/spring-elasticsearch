@@ -17,6 +17,7 @@
 		<dubbo.version>2.5.5.cat-SNAPSHOT</dubbo.version>
 		<mybatis.version>3.2.4</mybatis.version>
 		<mybatis-spring.version>1.2.2</mybatis-spring.version>
+		<log4j2.version>2.6.2</log4j2.version>
 	</properties>
 	<dependencies>
 
@@ -122,6 +123,21 @@
 				<artifactId>mybatis-spring</artifactId>
 				<version>${mybatis-spring.version}</version>
 			</dependency>
+			<dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+    <groupId>commons-beanutils</groupId>
+    <artifactId>commons-beanutils</artifactId>
+    <version>1.9.3</version>
+</dependency>
 	</dependencies>
 	<build>
 		<finalName>spring-elasticsearch</finalName>

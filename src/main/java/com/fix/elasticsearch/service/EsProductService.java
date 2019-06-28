@@ -1,6 +1,7 @@
 package com.fix.elasticsearch.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 
 import com.fix.domain.EsProduct;
 import com.fix.domain.EsProductRelatedInfo;
@@ -51,4 +52,15 @@ public interface EsProductService {
      * 获取搜索词相关品牌、分类、属性
      */
     EsProductRelatedInfo searchRelatedInfo(String keyword);
+
+	Page<EsProduct> searchDistance(String keyword, Long brandId, Long productCategoryId, Integer pageNum,
+			Integer pageSize, Integer sort);
+
+	EsProductRelatedInfo minmax(String keyword);
+
+	EsProductRelatedInfo searchModel(String keyword);
+
+	AggregatedPage<EsProduct> searchHighLight(String keyword, Integer pageNum, Integer pageSize);
+
+	Page<EsProduct> searchSimoles(String keyword, Integer pageNum, Integer pageSize);
 }

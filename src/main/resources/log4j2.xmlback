@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<Configuration status="INFO">
+    <properties>
+        <!--变量定义 -->
+        <Property name="baseDir">/data/logs/</Property>
+        <property name="log_pattern">%-d{yyyy-MM-dd HH:mm:ss.SSS} [%t:%r] [%F:%L] - [%p] %m%n</property>
+        <property name="file_name">info.log</property>
+        <property name="error_file_name">error.log</property>
+        <property name="warn_file_name">warn.log</property>
+        <property name="rolling_file_name">wdmsg-%d{yyyy-MM-dd-HH}.log.%i</property>
+        <!-- 日志切割的最小单位 -->
+        <property name="every_file_size">100M</property> 
+    </properties>
+
+    <Appenders>
+        <!--输出控制台的配置 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+             <ThresholdFilter level="INFO" onMatch="ACCEPT" />
+            <!--输出日志的格式 -->
+             <PatternLayout pattern="${log_pattern}" /> 
+           
+        </Console>
+        
+        <!-- 输出不同级别的日志到不同的文件下 -->
+        <RollingFile name="infoFile" fileName="${baseDir}${file_name}" filePattern="${baseDir}${rolling_file_name}">
+            <PatternLayout pattern="${log_pattern}" />
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL" />
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" />
+            </Filters>
+            <SizeBasedTriggeringPolicy size="${every_file_size}" />
+        </RollingFile>
+        <RollingFile name="warnFile" fileName="${baseDir}${warn_file_name}" filePattern="${baseDir}${rolling_file_name}">
+            <PatternLayout pattern="${log_pattern}" />
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL" />
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" />
+            </Filters>
+            <SizeBasedTriggeringPolicy size="${every_file_size}" />
+        </RollingFile>
+        <RollingFile name="errorFile" fileName="${baseDir}${error_file_name}" filePattern="${baseDir}${rolling_file_name}">
+            <PatternLayout pattern="${log_pattern}" />
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" />
+            <SizeBasedTriggeringPolicy size="${every_file_size}" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!--建立一个默认的root的logger，需要在root的level中指定输出的级别， -->
+        <Root level="all">
+            <appender-ref ref="console" />
+            <appender-ref ref="infoFile" />
+            <appender-ref ref="warnFile" />
+            <appender-ref ref="errorFile" />
+        </Root>
+    </Loggers>
+</Configuration>
