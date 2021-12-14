@@ -17,7 +17,7 @@
 		<dubbo.version>2.5.5.cat-SNAPSHOT</dubbo.version>
 		<mybatis.version>3.2.4</mybatis.version>
 		<mybatis-spring.version>1.2.2</mybatis-spring.version>
-		<log4j2.version>2.6.2</log4j2.version>
+		<log4j2.version>2.16.0</log4j2.version>
 	</properties>
 	<dependencies>
 
